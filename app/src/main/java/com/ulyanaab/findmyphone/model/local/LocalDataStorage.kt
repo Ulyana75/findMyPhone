@@ -4,6 +4,6 @@ import com.ulyanaab.findmyphone.model.PhoneMetrics
 
 interface LocalDataStorage {
 
-    fun sendData(data: List<PhoneMetrics>)
+    fun sendData(data: List<PhoneMetrics>, callback: () -> Unit)
 
 }

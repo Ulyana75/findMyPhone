@@ -14,4 +14,7 @@ interface MetricsDao {
     @Query("DELETE FROM PhoneMetrics")
     fun deleteAll()
 
+    @Query("SELECT * FROM PhoneMetrics")
+    fun getAll(): List<PhoneMetrics>
+
 }

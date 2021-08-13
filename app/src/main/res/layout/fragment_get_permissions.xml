@@ -31,4 +31,13 @@
         android:text="@string/get_permission_button_text"
         android:padding="@dimen/normal_padding"/>
 
+    <Button
+        android:id="@+id/button_go_to_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/button_give_permission"
+        android:layout_margin="@dimen/margin_normal"
+        android:text="@string/button_go_to_settings_text"
+        android:padding="@dimen/normal_padding"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

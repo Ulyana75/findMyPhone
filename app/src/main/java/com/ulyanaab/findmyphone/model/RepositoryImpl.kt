@@ -13,17 +13,17 @@ class RepositoryImpl : Repository {
 
     override fun sendData(data: List<PhoneMetrics>, callback: () -> Unit) {
         try {
-            sendToRemoteStorage(data)
+            sendToRemoteStorage(data, callback)
         } catch (_: Exception) {
-            sendToLocalStorage(data)
+            sendToLocalStorage(data, callback)
         }
     }
 
-    private fun sendToLocalStorage(data: List<PhoneMetrics>) {
-        localDataStorage.sendData(data)
+    private fun sendToLocalStorage(data: List<PhoneMetrics>, callback: () -> Unit) {
+        localDataStorage.sendData(data, callback)
     }
 
-    private fun sendToRemoteStorage(data: List<PhoneMetrics>) {
-        remoteDataStorage.sendData(data)
+    private fun sendToRemoteStorage(data: List<PhoneMetrics>, callback: () -> Unit) {
+        remoteDataStorage.sendData(data, callback)
     }
 }

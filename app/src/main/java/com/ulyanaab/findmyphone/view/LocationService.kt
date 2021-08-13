@@ -28,7 +28,7 @@ import com.ulyanaab.findmyphone.model.RepositoryImpl
 class LocationService : Service() {
 
     private val NOTIFICATION_CHANNEL_ID = "notification_channel"
-    private val TIME_DELAY_SAVE_METRICS: Long = 1000
+    private val TIME_DELAY_SAVE_METRICS: Long = 3000
     private val MAX_BUFFER_SIZE = 10
     private val MIN_DIST = 0f
 
@@ -97,7 +97,7 @@ class LocationService : Service() {
 
     @SuppressLint("HardwareIds")
     private fun getMetrics(): PhoneMetrics {
-        val location = telephonyManager.cellLocation as GsmCellLocation
+        val location = telephonyManager.cellLocation as GsmCellLocation?
         val cellInfo = telephonyManager.allCellInfo
         var rsrp: Int? = null
         var rsrq: Int? = null
@@ -114,14 +114,14 @@ class LocationService : Service() {
         }
 
         val res = PhoneMetrics(
-            cellId = location.cid,
+            cellId = location?.cid,
             deviceId = Settings.Secure.getString(
                 applicationContext.contentResolver,
                 Settings.Secure.ANDROID_ID
             ),
             latitude = locationListener.getLatitude(),
             longitude = locationListener.getLongitude(),
-            lac = location.lac,
+            lac = location?.lac,
             rsrp = rsrp,
             rsrq = rsrq,
             sinr = sinr,
@@ -132,7 +132,7 @@ class LocationService : Service() {
     }
 
     private fun sendData(callback: () -> Unit) {
-        //repository.sendData(buffer, callback)
+        repository.sendData(buffer, callback)
     }
 
     private fun makeNotification() {

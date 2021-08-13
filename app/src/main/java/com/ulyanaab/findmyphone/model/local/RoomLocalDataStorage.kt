@@ -2,8 +2,12 @@ package com.ulyanaab.findmyphone.model.local
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import com.ulyanaab.findmyphone.App
 import com.ulyanaab.findmyphone.model.PhoneMetrics
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class RoomLocalDataStorage : LocalDataStorage {
 
@@ -24,12 +28,17 @@ class RoomLocalDataStorage : LocalDataStorage {
         handler.postDelayed(runnable, DELETION_TIME_DELAY)
     }
 
-    override fun sendData(data: List<PhoneMetrics>) {
-        dao.insertAll(data)
+    override fun sendData(data: List<PhoneMetrics>, callback: () -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            dao.insertAll(data)
+            callback()
+        }
     }
 
     private fun deleteAll() {
-        dao.deleteAll()
+        CoroutineScope(Dispatchers.IO).launch {
+            dao.deleteAll()
+        }
     }
 
 }

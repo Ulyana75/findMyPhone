@@ -2,7 +2,8 @@
     <string name="app_name">FindMyPhone</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="get_permission_description">Чтобы начать работу приложения, выдайте разрешение на местоположение вашего устройства. Нажмите на кнопку ниже.</string>
+    <string name="get_permission_description">Чтобы начать работу приложения, выдайте разрешение на местоположение вашего устройства. Нажмите на кнопку ниже либо включите данное разрешение в настройках.</string>
     <string name="get_permission_button_text">Выдать разрешение на геолокацию</string>
     <string name="main_fragment_text">Приложение работает. Все хорошо.</string>
+    <string name="button_go_to_settings_text">Перейти в настройки</string>
 </resources>
