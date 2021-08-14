@@ -1,4 +1,4 @@
-package com.ulyanaab.findmyphone.view
+package com.ulyanaab.findmyphone.view.childPart
 
 import android.content.BroadcastReceiver
 import android.content.Context

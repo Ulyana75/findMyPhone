@@ -1,21 +1,12 @@
 package com.ulyanaab.findmyphone.view
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.telephony.TelephonyManager
-import android.telephony.gsm.GsmCellLocation
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import com.ulyanaab.findmyphone.R
-import com.ulyanaab.findmyphone.model.RepositoryMetrics
-import com.ulyanaab.findmyphone.model.RepositoryMetricsImpl
-import com.ulyanaab.findmyphone.model.RepositoryUser
-import com.ulyanaab.findmyphone.model.RepositoryUserImpl
 import com.ulyanaab.findmyphone.utilities.*
-import java.util.*
+import com.ulyanaab.findmyphone.view.childPart.GetPermissionsFragment
+import com.ulyanaab.findmyphone.view.childPart.InitUserFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,24 +18,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        requestLocationPermissions()
+        checkAuth()
     }
 
-    private fun requestLocationPermissions() {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this, arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ), REQUEST_LOCATION_CODE
-            )
+    private fun checkAuth() {
+        val sPref = getSharedPreferences(TOKEN_PREFERENCE, MODE_PRIVATE)
+        val uid = sPref.getString(TOKEN_KEY, "null")
+        if(uid == "null") {
+            replaceFragment(ChooseAccountFragment())
         } else {
             replaceFragment(InitUserFragment())
         }

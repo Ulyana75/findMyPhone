@@ -52,4 +52,16 @@ class RetrofitRemoteDataStorage : RemoteDataStorage {
         }
     }
 
+    override fun getLast(token: String): PhoneMetrics {
+        return retrofitApi.getLastRecord(token)
+    }
+
+    override fun getAll(token: String): MetricsList {
+        return retrofitApi.getAllRecords(token)
+    }
+
+    override fun getByTime(token: String, timeBegin: Long, timeEnd: Long): MetricsList {
+        return retrofitApi.getRecordsByTime(token, timeBegin, timeEnd)
+    }
+
 }

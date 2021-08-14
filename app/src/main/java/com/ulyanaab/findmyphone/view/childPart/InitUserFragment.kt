@@ -1,8 +1,7 @@
-package com.ulyanaab.findmyphone.view
+package com.ulyanaab.findmyphone.view.childPart
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.app.Dialog
 import android.os.Bundle
 import android.provider.Settings
 import androidx.fragment.app.Fragment

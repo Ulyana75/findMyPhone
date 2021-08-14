@@ -12,4 +12,13 @@
     <string name="button_continue_text">Продолжить работу</string>
     <string name="try_again">Повторить попытку</string>
     <string name="description_network">Для инициализации в приложении необходимо подключение к интернету</string>
+    <string name="choose_account_text">Выберите тип вашего аккаунта</string>
+    <string name="button_child">Ребенок</string>
+    <string name="button_parent">Родитель</string>
+    <string name="parent_edit_text">Введите ID, которое хотите отследить</string>
+    <string name="open_map">Открыть карту</string>
+    <string name="menu_day">за сутки</string>
+    <string name="menu_week">за неделю</string>
+    <string name="menu_month">за месяц</string>
+    <string name="menu_custom">выбрать даты</string>
 </resources>

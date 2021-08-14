@@ -2,6 +2,7 @@ package com.ulyanaab.findmyphone.model
 
 import com.ulyanaab.findmyphone.model.local.LocalDataStorage
 import com.ulyanaab.findmyphone.model.local.RoomLocalDataStorage
+import com.ulyanaab.findmyphone.model.objects.MetricsList
 import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 import com.ulyanaab.findmyphone.model.remote.RemoteDataStorage
 import com.ulyanaab.findmyphone.model.remote.RetrofitRemoteDataStorage
@@ -25,6 +26,18 @@ class RepositoryMetricsImpl : RepositoryMetrics {
                 })
             localDataStorage.deleteAll()
         }
+    }
+
+    override fun getLast(token: String): PhoneMetrics {
+        return remoteDataStorage.getLast(token)
+    }
+
+    override fun getAll(token: String): MetricsList {
+        return remoteDataStorage.getAll(token)
+    }
+
+    override fun getByTime(token: String, timeBegin: Long, timeEnd: Long): MetricsList {
+        return remoteDataStorage.getByTime(token, timeBegin, timeEnd)
     }
 
     private fun sendToLocalStorage(data: List<PhoneMetrics>, callback: () -> Unit) {

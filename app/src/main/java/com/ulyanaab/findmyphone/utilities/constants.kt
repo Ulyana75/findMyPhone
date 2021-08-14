@@ -18,3 +18,5 @@ const val TOKEN_KEY = "token"
 const val BASE_URL = "https://www.chess.com"
 
 val liveDataNeedToStop = MutableLiveData<Boolean>()
+
+const val KEY_TO_SEND_TOKEN = "token"

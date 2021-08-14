@@ -7,13 +7,40 @@
     tools:context=".view.ChooseAccountFragment">
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/chooseType"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="200dp"
         android:layout_marginStart="@dimen/margin_normal"
         android:layout_marginEnd="@dimen/margin_normal"
+        android:text="@string/choose_account_text"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:gravity="center"/>
 
+    <Button
+        android:id="@+id/button_child"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/chooseType"
+        app:layout_constraintEnd_toEndOf="@+id/chooseType"
+        app:layout_constraintTop_toBottomOf="@+id/chooseType"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:text="@string/button_child"
+        android:padding="@dimen/normal_padding"/>
 
+    <Button
+        android:id="@+id/button_parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/chooseType"
+        app:layout_constraintEnd_toEndOf="@+id/chooseType"
+        app:layout_constraintTop_toBottomOf="@+id/button_child"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:text="@string/button_parent"
+        android:padding="@dimen/normal_padding"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
