@@ -21,8 +21,6 @@ import com.ulyanaab.findmyphone.utilities.replaceFragment
 
 class GetPermissionsFragment : Fragment() {
 
-    private var neverAskAgainChosen = false
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

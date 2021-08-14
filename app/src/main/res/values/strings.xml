@@ -6,4 +6,5 @@
     <string name="get_permission_button_text">Выдать разрешение на геолокацию</string>
     <string name="main_fragment_text">Приложение работает. Все хорошо.</string>
     <string name="button_go_to_settings_text">Перейти в настройки</string>
+    <string name="toast_off_gps">Приложение FindMyPhone не может работать с выключенным GPS :(</string>
 </resources>

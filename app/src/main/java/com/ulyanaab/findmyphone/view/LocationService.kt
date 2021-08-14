@@ -18,11 +18,16 @@ import android.telephony.CellInfoLte
 import android.telephony.TelephonyManager
 import android.telephony.gsm.GsmCellLocation
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.ulyanaab.findmyphone.R
 import com.ulyanaab.findmyphone.model.PhoneMetrics
 import com.ulyanaab.findmyphone.model.Repository
 import com.ulyanaab.findmyphone.model.RepositoryImpl
+import com.ulyanaab.findmyphone.utilities.userId
+import java.util.concurrent.Executor
+import java.util.function.Consumer
 
 @SuppressLint("MissingPermission")
 class LocationService : Service() {
@@ -30,7 +35,7 @@ class LocationService : Service() {
     private val NOTIFICATION_CHANNEL_ID = "notification_channel"
     private val TIME_DELAY_SAVE_METRICS: Long = 3000
     private val MAX_BUFFER_SIZE = 10
-    private val MIN_DIST = 0f
+    private val MIN_DIST = 3f
 
     private lateinit var telephonyManager: TelephonyManager
     private lateinit var locationManager: LocationManager
@@ -56,11 +61,11 @@ class LocationService : Service() {
     override fun onCreate() {
         super.onCreate()
         makeNotification()
-        initManagers()
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         isServiceStarted = true
+        initManagers()
         handler.post(runnable)
         return START_STICKY
     }
@@ -119,15 +124,15 @@ class LocationService : Service() {
                 applicationContext.contentResolver,
                 Settings.Secure.ANDROID_ID
             ),
-            latitude = locationListener.getLatitude(),
-            longitude = locationListener.getLongitude(),
+            latitude = locationListener.getCurrentLocation()?.latitude,
+            longitude = locationListener.getCurrentLocation()?.longitude,
             lac = location?.lac,
             rsrp = rsrp,
             rsrq = rsrq,
             sinr = sinr,
-            imsi = "0"   // telephonyManager.subscriberId
+            userId = userId
         )
-        //Log.d("LOL", res.toString())
+        Log.d("LOL", res.toString())
         return res
     }
 
@@ -160,18 +165,26 @@ class LocationService : Service() {
 
     inner class MyLocationListener : LocationListener {
 
-        private var curLocation: Location? = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        private var curLocation: Location? =
+            locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
         override fun onLocationChanged(location: Location) {
             curLocation = location
         }
 
-        fun getLatitude(): Double? {
-            return curLocation?.latitude
+        override fun onProviderDisabled(provider: String) {
+            Toast.makeText(
+                this@LocationService,
+                getString(R.string.toast_off_gps),
+                Toast.LENGTH_LONG
+            ).show()
         }
 
-        fun getLongitude(): Double? {
-            return curLocation?.longitude
+        override fun onProviderEnabled(provider: String) {
+        }
+
+        fun getCurrentLocation(): Location? {
+            return curLocation
         }
 
     }

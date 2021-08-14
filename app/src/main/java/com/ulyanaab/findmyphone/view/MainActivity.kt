@@ -8,12 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.ulyanaab.findmyphone.App
 import com.ulyanaab.findmyphone.R
-import com.ulyanaab.findmyphone.utilities.APP_ACTIVITY
-import com.ulyanaab.findmyphone.utilities.REQUEST_LOCATION_CODE
-import com.ulyanaab.findmyphone.utilities.replaceFragment
+import com.ulyanaab.findmyphone.utilities.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,9 +25,17 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         requestLocationPermissions()
-        CoroutineScope(Dispatchers.IO).launch {
-            Log.d("LOL", App.database.phoneMetricsDao().getAll().toString())
+        initUserId()
+    }
+
+    private fun initUserId() {
+        val sPref = getSharedPreferences(NAME_USER_PREFERENCE, MODE_PRIVATE)
+        var uid = sPref.getString(USER_ID_KEY, "null")
+        if(uid == "null") {
+            uid = UUID.randomUUID().toString()
+            sPref.edit().putString(USER_ID_KEY, uid).apply()
         }
+        userId = uid!!
     }
 
     private fun requestLocationPermissions() {
@@ -46,6 +53,8 @@ class MainActivity : AppCompatActivity() {
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ), REQUEST_LOCATION_CODE
             )
+        } else {
+            replaceFragment(MainFragment())
         }
     }
 
