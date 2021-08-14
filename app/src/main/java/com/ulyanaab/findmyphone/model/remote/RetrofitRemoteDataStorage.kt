@@ -9,6 +9,7 @@ import com.ulyanaab.findmyphone.utilities.token
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RetrofitRemoteDataStorage : RemoteDataStorage {
 
@@ -22,9 +23,13 @@ class RetrofitRemoteDataStorage : RemoteDataStorage {
                         data = data
                     )
                 )
-                onSuccess()
+                withContext(Dispatchers.Main) {
+                    onSuccess()
+                }
             } catch (e: Exception) {
-                onFailure()
+                withContext(Dispatchers.Main) {
+                    onFailure()
+                }
             }
         }
     }
@@ -36,9 +41,13 @@ class RetrofitRemoteDataStorage : RemoteDataStorage {
                     user.deviceId
                 )
                 token = response.token
-                onSuccess()
+                withContext(Dispatchers.Main) {
+                    onSuccess()
+                }
             } catch(e: Exception) {
-                onFailure()
+                withContext(Dispatchers.Main) {
+                    onFailure()
+                }
             }
         }
     }
