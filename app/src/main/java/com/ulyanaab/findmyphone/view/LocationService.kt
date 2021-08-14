@@ -125,7 +125,7 @@ class LocationService : Service() {
         }
 
         val res = PhoneMetrics(
-            token = token,
+            fromToken = token,
             cellId = location?.cid,
             latitude = locationListener.getCurrentLocation()?.latitude,
             longitude = locationListener.getCurrentLocation()?.longitude,
