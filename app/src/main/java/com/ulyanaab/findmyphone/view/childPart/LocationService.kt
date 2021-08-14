@@ -1,4 +1,4 @@
-package com.ulyanaab.findmyphone.view
+package com.ulyanaab.findmyphone.view.childPart
 
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
