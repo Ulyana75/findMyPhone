@@ -43,7 +43,7 @@ class GetPermissionsFragment : Fragment() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            replaceFragment(MainFragment())
+            replaceFragment(InitUserFragment())
         }
     }
 

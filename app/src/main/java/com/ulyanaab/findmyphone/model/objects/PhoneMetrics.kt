@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "PhoneMetrics")
 data class PhoneMetrics(
+    val token: String,
     val cellId: Int?,
     val latitude: Double?,
     val longitude: Double?,

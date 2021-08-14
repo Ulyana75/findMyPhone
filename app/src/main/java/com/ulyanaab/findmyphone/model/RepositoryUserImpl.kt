@@ -8,8 +8,8 @@ class RepositoryUserImpl : RepositoryUser {
 
     private val remoteDataStorage: RemoteDataStorage = RetrofitRemoteDataStorage()
 
-    override fun sendData(user: UserModel, callback: () -> Unit) {
-        remoteDataStorage.sendUser(user, callback)
+    override fun sendData(user: UserModel, onSuccess: () -> Unit, onFailure: () -> Unit) {
+        remoteDataStorage.sendUser(user, onSuccess, onFailure)
     }
 
 }

@@ -13,7 +13,6 @@ import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
-import android.provider.Settings
 import android.telephony.CellInfoLte
 import android.telephony.TelephonyManager
 import android.telephony.gsm.GsmCellLocation
@@ -21,11 +20,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.ulyanaab.findmyphone.R
-import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 import com.ulyanaab.findmyphone.model.RepositoryMetrics
 import com.ulyanaab.findmyphone.model.RepositoryMetricsImpl
+import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
+import com.ulyanaab.findmyphone.utilities.APP_ACTIVITY
+import com.ulyanaab.findmyphone.utilities.liveDataNeedToStop
 import com.ulyanaab.findmyphone.utilities.token
-import com.ulyanaab.findmyphone.utilities.userId
 
 @SuppressLint("MissingPermission")
 class LocationService : Service() {
@@ -57,12 +57,12 @@ class LocationService : Service() {
     }
 
     override fun onCreate() {
+        isServiceStarted = true
         super.onCreate()
         makeNotification()
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        isServiceStarted = true
         initManagers()
         handler.post(runnable)
         return START_STICKY
@@ -73,6 +73,7 @@ class LocationService : Service() {
         isServiceStarted = false
         handler.removeCallbacks(runnable)
         locationManager.removeUpdates(locationListener)
+        Log.d("LOL", "onDestroy")
     }
 
     private fun initManagers() {
@@ -86,6 +87,13 @@ class LocationService : Service() {
             MIN_DIST,
             locationListener
         )
+
+        liveDataNeedToStop.observe(APP_ACTIVITY) {
+            if(it) {
+                stopForeground(true)
+                stopSelf()
+            }
+        }
     }
 
 
@@ -117,6 +125,7 @@ class LocationService : Service() {
         }
 
         val res = PhoneMetrics(
+            token = token,
             cellId = location?.cid,
             latitude = locationListener.getCurrentLocation()?.latitude,
             longitude = locationListener.getCurrentLocation()?.longitude,

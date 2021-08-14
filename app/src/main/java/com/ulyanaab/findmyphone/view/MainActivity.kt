@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                 ), REQUEST_LOCATION_CODE
             )
         } else {
-            replaceFragment(MainFragment())
+            replaceFragment(InitUserFragment())
         }
     }
 
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         if(requestCode == REQUEST_LOCATION_CODE) {
             grantResults.forEach {
                 if (it == PackageManager.PERMISSION_GRANTED) {
-                    replaceFragment(MainFragment())
+                    replaceFragment(InitUserFragment())
                     return
                 }
             }

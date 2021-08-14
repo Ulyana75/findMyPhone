@@ -4,9 +4,8 @@ import android.os.Handler
 import android.os.Looper
 import com.ulyanaab.findmyphone.App
 import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import java.lang.Runnable
 
 class RoomLocalDataStorage : LocalDataStorage {
 
@@ -34,7 +33,11 @@ class RoomLocalDataStorage : LocalDataStorage {
         }
     }
 
-    private fun deleteAll() {
+    override fun getAll(): List<PhoneMetrics> = runBlocking {
+        return@runBlocking async { dao.getAll() }.await()
+    }
+
+    override fun deleteAll() {
         CoroutineScope(Dispatchers.IO).launch {
             dao.deleteAll()
         }

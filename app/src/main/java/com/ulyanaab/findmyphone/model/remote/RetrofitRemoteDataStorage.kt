@@ -14,25 +14,32 @@ class RetrofitRemoteDataStorage : RemoteDataStorage {
 
     private val retrofitApi = App.retrofitApi
 
-    override fun sendMetrics(data: List<PhoneMetrics>, callback: () -> Unit) {
+    override fun sendMetrics(data: List<PhoneMetrics>, onSuccess: () -> Unit, onFailure: () -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
-            retrofitApi.pushMetrics(
-                token,
-                MetricsList(
-                    data = data
+            try {
+                retrofitApi.pushMetrics(
+                    MetricsList(
+                        data = data
+                    )
                 )
-            )
-            callback()
+                onSuccess()
+            } catch (e: Exception) {
+                onFailure()
+            }
         }
     }
 
-    override fun sendUser(user: UserModel, callback: () -> Unit) {
+    override fun sendUser(user: UserModel, onSuccess: () -> Unit, onFailure: () -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = retrofitApi.pushNewUser(
-                user.deviceId
-            )
-            token = response.token
-            callback()
+            try {
+                val response = retrofitApi.pushNewUser(
+                    user.deviceId
+                )
+                token = response.token
+                onSuccess()
+            } catch(e: Exception) {
+                onFailure()
+            }
         }
     }
 

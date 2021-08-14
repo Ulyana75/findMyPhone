@@ -4,7 +4,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="get_permission_description">Чтобы начать работу приложения, выдайте разрешение на местоположение вашего устройства. Нажмите на кнопку ниже либо включите данное разрешение в настройках.</string>
     <string name="get_permission_button_text">Выдать разрешение на геолокацию</string>
-    <string name="main_fragment_text">Приложение работает. Все хорошо.</string>
+    <string name="main_fragment_text">Приложение работает.</string>
+    <string name="main_fragment_text_stop">Приложение остановлено.</string>
     <string name="button_go_to_settings_text">Перейти в настройки</string>
     <string name="toast_off_gps">Приложение FindMyPhone не может работать с выключенным GPS :(</string>
+    <string name="text_button_stop">Остановить</string>
+    <string name="button_continue_text">Продолжить работу</string>
+    <string name="try_again">Повторить попытку</string>
+    <string name="description_network">Для инициализации в приложении необходимо подключение к интернету</string>
 </resources>

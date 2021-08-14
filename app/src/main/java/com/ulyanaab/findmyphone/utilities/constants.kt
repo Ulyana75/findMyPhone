@@ -1,5 +1,6 @@
 package com.ulyanaab.findmyphone.utilities
 
+import androidx.lifecycle.MutableLiveData
 import com.ulyanaab.findmyphone.view.MainActivity
 
 lateinit var APP_ACTIVITY: MainActivity
@@ -14,4 +15,6 @@ const val TOKEN_PREFERENCE = "TokenSPref"
 
 const val TOKEN_KEY = "token"
 
-const val BASE_URL = ""
+const val BASE_URL = "https://www.chess.com"
+
+val liveDataNeedToStop = MutableLiveData<Boolean>()

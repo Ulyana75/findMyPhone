@@ -5,8 +5,8 @@ import com.ulyanaab.findmyphone.model.objects.UserModel
 
 interface RemoteDataStorage {
 
-    fun sendMetrics(data: List<PhoneMetrics>, callback: () -> Unit)
+    fun sendMetrics(data: List<PhoneMetrics>, onSuccess: () -> Unit, onFailure: () -> Unit)
 
-    fun sendUser(user: UserModel, callback: () -> Unit)
+    fun sendUser(user: UserModel, onSuccess: () -> Unit, onFailure: () -> Unit)
 
 }

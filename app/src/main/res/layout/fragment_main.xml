@@ -7,6 +7,7 @@
     tools:context=".view.MainFragment">
 
     <TextView
+        android:id="@+id/text_label"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="@string/main_fragment_text"
@@ -20,5 +21,29 @@
         android:background="@drawable/beauty_shape"
         android:padding="@dimen/normal_padding"
         android:elevation="10dp"/>
+
+    <Button
+        android:id="@+id/button_stop"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/text_label"
+        app:layout_constraintEnd_toEndOf="@+id/text_label"
+        app:layout_constraintTop_toBottomOf="@+id/text_label"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:text="@string/text_button_stop"
+        android:padding="@dimen/normal_padding"/>
+
+    <Button
+        android:id="@+id/button_continue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/text_label"
+        app:layout_constraintEnd_toEndOf="@+id/text_label"
+        app:layout_constraintTop_toBottomOf="@+id/text_label"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:text="@string/button_continue_text"
+        android:padding="@dimen/normal_padding"
+        android:visibility="gone"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

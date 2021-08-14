@@ -6,4 +6,8 @@ interface LocalDataStorage {
 
     fun sendData(data: List<PhoneMetrics>, callback: () -> Unit)
 
+    fun getAll(): List<PhoneMetrics>
+
+    fun deleteAll()
+
 }
