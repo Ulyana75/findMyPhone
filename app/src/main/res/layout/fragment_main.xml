@@ -7,6 +7,16 @@
     tools:context=".view.childPart.MainFragment">
 
     <TextView
+        android:id="@+id/token_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        tools:text="token: 123123123"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:textSize="20sp"/>
+
+    <TextView
         android:id="@+id/text_label"
         android:layout_width="300dp"
         android:layout_height="wrap_content"

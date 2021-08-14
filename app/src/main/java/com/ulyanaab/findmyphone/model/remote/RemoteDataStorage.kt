@@ -3,6 +3,7 @@ package com.ulyanaab.findmyphone.model.remote
 import com.ulyanaab.findmyphone.model.objects.MetricsList
 import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 import com.ulyanaab.findmyphone.model.objects.UserModel
+import java.util.*
 
 interface RemoteDataStorage {
 
@@ -14,6 +15,6 @@ interface RemoteDataStorage {
 
     fun getAll(token: String): MetricsList
 
-    fun getByTime(token: String, timeBegin: Long, timeEnd: Long): MetricsList
+    fun getByTime(token: String, timeBegin: String, timeEnd: String): MetricsList
 
 }

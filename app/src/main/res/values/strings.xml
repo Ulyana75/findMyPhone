@@ -15,10 +15,13 @@
     <string name="choose_account_text">Выберите тип вашего аккаунта</string>
     <string name="button_child">Ребенок</string>
     <string name="button_parent">Родитель</string>
-    <string name="parent_edit_text">Введите ID, которое хотите отследить</string>
+    <string name="parent_edit_text">Введите токен</string>
     <string name="open_map">Открыть карту</string>
     <string name="menu_day">за сутки</string>
     <string name="menu_week">за неделю</string>
     <string name="menu_month">за месяц</string>
     <string name="menu_custom">выбрать даты</string>
+    <string name="network_dialog_title">Возникла ошибка</string>
+    <string name="network_dialog_description">Для инициализации необходимо получить токен с сервера. Проверьте доступ к интернету и повторите попытку.</string>
+    <string name="wrong_token_title">Неверный токен</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.ulyanaab.findmyphone.view.childPart
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,19 +14,19 @@ import com.ulyanaab.findmyphone.utilities.REQUEST_LOCATION_CODE
 import com.ulyanaab.findmyphone.utilities.replaceFragment
 
 
-class MainChildFragment : Fragment() {
+class StartChildFragment : Fragment() {
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requestLocationPermissions()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_child, container, false)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        requestLocationPermissions()
+        return inflater.inflate(R.layout.fragment_start_child, container, false)
     }
 
     private fun requestLocationPermissions() {

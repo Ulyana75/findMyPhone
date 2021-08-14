@@ -6,9 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.ulyanaab.findmyphone.R
+import com.ulyanaab.findmyphone.utilities.PARENT_TOKEN
+import com.ulyanaab.findmyphone.utilities.TOKEN_KEY
+import com.ulyanaab.findmyphone.utilities.TOKEN_PREFERENCE
 import com.ulyanaab.findmyphone.utilities.replaceFragment
-import com.ulyanaab.findmyphone.view.childPart.MainChildFragment
+import com.ulyanaab.findmyphone.view.childPart.StartChildFragment
 import com.ulyanaab.findmyphone.view.parentPart.MainParentFragment
 
 
@@ -30,13 +34,19 @@ class ChooseAccountFragment : Fragment() {
     private fun initViews() {
         with(requireView()) {
             findViewById<Button>(R.id.button_child).setOnClickListener {
-                replaceFragment(MainChildFragment())
+                replaceFragment(StartChildFragment())
             }
 
             findViewById<Button>(R.id.button_parent).setOnClickListener {
+                addParentToken()
                 replaceFragment(MainParentFragment())
             }
         }
+    }
+
+    private fun addParentToken() {
+        val sPref = requireContext().getSharedPreferences(TOKEN_PREFERENCE, AppCompatActivity.MODE_PRIVATE)
+        sPref.edit().putString(TOKEN_KEY, PARENT_TOKEN).apply()
     }
 
 }

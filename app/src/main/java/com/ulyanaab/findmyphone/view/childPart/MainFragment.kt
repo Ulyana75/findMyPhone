@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ulyanaab.findmyphone.R
 import com.ulyanaab.findmyphone.utilities.liveDataNeedToStop
+import com.ulyanaab.findmyphone.utilities.token
 
 
 class MainFragment : Fragment() {
@@ -46,6 +47,8 @@ class MainFragment : Fragment() {
                 startService()
                 serviceWorking()
             }
+
+            findViewById<TextView>(R.id.token_text).text = token
         }
     }
 

@@ -1,28 +1,21 @@
 package com.ulyanaab.findmyphone.view.childPart
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
-import android.provider.Settings
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.ulyanaab.findmyphone.R
-import com.ulyanaab.findmyphone.model.RepositoryUser
-import com.ulyanaab.findmyphone.model.RepositoryUserImpl
-import com.ulyanaab.findmyphone.model.objects.UserModel
-import com.ulyanaab.findmyphone.utilities.TOKEN_KEY
-import com.ulyanaab.findmyphone.utilities.TOKEN_PREFERENCE
+import com.ulyanaab.findmyphone.controllers.InitUserController
 import com.ulyanaab.findmyphone.utilities.replaceFragment
-import com.ulyanaab.findmyphone.utilities.token
 
 
 class InitUserFragment : Fragment() {
 
-    private val repository: RepositoryUser = RepositoryUserImpl()
+    private val userController = InitUserController()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +28,10 @@ class InitUserFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         initViews()
+    }
+
+    override fun onResume() {
+        super.onResume()
         initUser()
     }
 
@@ -45,41 +42,22 @@ class InitUserFragment : Fragment() {
     }
 
     private fun initUser() {
-        val sPref = requireContext().getSharedPreferences(
-            TOKEN_PREFERENCE,
-            AppCompatActivity.MODE_PRIVATE
-        )
-        val uid = sPref.getString(TOKEN_KEY, "null")
-        if (uid == "null") {
-            sendUser {
-                sPref.edit().putString(TOKEN_KEY, token).apply()
-                replaceFragment(MainFragment())
-            }
-        } else {
-            token = uid!!
+        if(userController.isInited()) {
             replaceFragment(MainFragment())
-        }
-    }
-
-    @SuppressLint("HardwareIds")
-    private fun sendUser(callback: () -> Unit) {
-        val user = UserModel(
-            deviceId = Settings.Secure.getString(
-                requireContext().applicationContext.contentResolver,
-                Settings.Secure.ANDROID_ID
+        } else {
+            userController.sendUser(
+                onSuccess = {
+                    replaceFragment(MainFragment())
+                },
+                onFailure = this::showDialog
             )
-        )
-        repository.sendData(
-            user,
-            onSuccess = callback,
-            onFailure = this::showDialog
-        )
+        }
     }
 
     private fun showDialog() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Нет подключения к интернету")
-            .setMessage("Для инициализации необходимо получить токен с сервера. Проверьте доступ к интернету и повторите попытку.")
+        builder.setTitle(getString(R.string.network_dialog_title))
+            .setMessage(getString(R.string.network_dialog_description))
             .setPositiveButton("Ок") { dialog, _ ->
                 dialog.cancel()
             }

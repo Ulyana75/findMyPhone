@@ -6,10 +6,8 @@ import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 import com.ulyanaab.findmyphone.model.objects.UserModel
 import com.ulyanaab.findmyphone.model.objects.UserResponse
 import com.ulyanaab.findmyphone.utilities.token
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import java.util.*
 
 class RetrofitRemoteDataStorage : RemoteDataStorage {
 
@@ -52,16 +50,16 @@ class RetrofitRemoteDataStorage : RemoteDataStorage {
         }
     }
 
-    override fun getLast(token: String): PhoneMetrics {
-        return retrofitApi.getLastRecord(token)
+    override fun getLast(token: String): PhoneMetrics = runBlocking {
+        return@runBlocking retrofitApi.getLastRecord(token)
     }
 
-    override fun getAll(token: String): MetricsList {
-        return retrofitApi.getAllRecords(token)
+    override fun getAll(token: String): MetricsList = runBlocking {
+        return@runBlocking retrofitApi.getAllRecords(token)
     }
 
-    override fun getByTime(token: String, timeBegin: Long, timeEnd: Long): MetricsList {
-        return retrofitApi.getRecordsByTime(token, timeBegin, timeEnd)
+    override fun getByTime(token: String, timeBegin: String, timeEnd: String): MetricsList = runBlocking {
+        return@runBlocking retrofitApi.getRecordsByTime(token, timeBegin, timeEnd)
     }
 
 }

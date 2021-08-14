@@ -5,6 +5,7 @@ import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 import com.ulyanaab.findmyphone.model.objects.UserResponse
 import retrofit2.Call
 import retrofit2.http.*
+import java.util.*
 
 interface RetrofitApi {
 
@@ -19,21 +20,21 @@ interface RetrofitApi {
     )
 
     @POST("push/metrics/many")
-    fun pushMetrics(
+    suspend fun pushMetrics(
         @Body listMetrics: MetricsList
     )
 
     @GET("get/{token}/last_record")
-    fun getLastRecord(@Path("token") token: String): PhoneMetrics
+    suspend fun getLastRecord(@Path("token") token: String): PhoneMetrics
 
     @GET("get/{token}/all_records")
-    fun getAllRecords(@Path("token") token: String): MetricsList
+    suspend fun getAllRecords(@Path("token") token: String): MetricsList
 
     @GET("get/{token}/records")
-    fun getRecordsByTime(
+    suspend fun getRecordsByTime(
         @Path("token") token: String,
-        @Query("time_begin") timeBegin: Long,
-        @Query("time_end") timeEnd: Long
+        @Query("time_begin") timeBegin: String,
+        @Query("time_end") timeEnd: String
     ): MetricsList
 
 }

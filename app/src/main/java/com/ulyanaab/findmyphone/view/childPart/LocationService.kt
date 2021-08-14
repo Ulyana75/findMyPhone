@@ -20,15 +20,18 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.ulyanaab.findmyphone.R
-import com.ulyanaab.findmyphone.model.RepositoryMetrics
-import com.ulyanaab.findmyphone.model.RepositoryMetricsImpl
+import com.ulyanaab.findmyphone.controllers.ServiceController
 import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 import com.ulyanaab.findmyphone.utilities.APP_ACTIVITY
+import com.ulyanaab.findmyphone.utilities.dateFormat
 import com.ulyanaab.findmyphone.utilities.liveDataNeedToStop
 import com.ulyanaab.findmyphone.utilities.token
+import java.util.*
 
 @SuppressLint("MissingPermission")
 class LocationService : Service() {
+
+    private val serviceController = ServiceController()
 
     private val NOTIFICATION_CHANNEL_ID = "notification_channel"
     private val TIME_DELAY_SAVE_METRICS: Long = 3000
@@ -40,8 +43,6 @@ class LocationService : Service() {
     private lateinit var locationListener: MyLocationListener
 
     private val buffer = mutableListOf<PhoneMetrics>()
-
-    private val repository: RepositoryMetrics = RepositoryMetricsImpl()
 
     private val handler = Handler(Looper.getMainLooper())
 
@@ -96,11 +97,10 @@ class LocationService : Service() {
         }
     }
 
-
     private fun saveMetricsToBuffer() {
         buffer.add(getMetrics())
         if (buffer.size >= MAX_BUFFER_SIZE) {
-            sendData {
+            serviceController.sendData(buffer) {
                 buffer.clear()
             }
         }
@@ -126,6 +126,7 @@ class LocationService : Service() {
 
         val res = PhoneMetrics(
             fromToken = token,
+            date = dateFormat.format(Date()),
             cellId = location?.cid,
             latitude = locationListener.getCurrentLocation()?.latitude,
             longitude = locationListener.getCurrentLocation()?.longitude,
@@ -136,10 +137,6 @@ class LocationService : Service() {
         )
         Log.d("LOL", res.toString())
         return res
-    }
-
-    private fun sendData(callback: () -> Unit) {
-        repository.sendData(buffer, callback)
     }
 
     private fun makeNotification() {

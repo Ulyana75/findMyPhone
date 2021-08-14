@@ -17,6 +17,8 @@ import com.ulyanaab.findmyphone.R
 import com.ulyanaab.findmyphone.controllers.MapController
 import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 import com.ulyanaab.findmyphone.utilities.KEY_TO_SEND_TOKEN
+import com.ulyanaab.findmyphone.utilities.replaceFragment
+import java.util.*
 
 class MapsFragment : Fragment() {
 
@@ -36,18 +38,8 @@ class MapsFragment : Fragment() {
             false
         }
 
-        showData()
+        requestPoints()
 
-    }
-
-    private fun getTitle(phoneMetrics: PhoneMetrics): String {
-        return "latitude = ${phoneMetrics.latitude}\n" +
-                "longitude = ${phoneMetrics.longitude}\n" +
-                "cell id = ${phoneMetrics.cellId}\n" +
-                "lac = ${phoneMetrics.lac}\n" +
-                "rsrp = ${phoneMetrics.rsrp}\n" +
-                "rsrq = ${phoneMetrics.rsrq}\n" +
-                "sinr = ${phoneMetrics.sinr}"
     }
 
     override fun onCreateView(
@@ -65,34 +57,48 @@ class MapsFragment : Fragment() {
         mapFragment?.getMapAsync(callback)
     }
 
-    private fun showData(
-        timeBegin: Long = System.currentTimeMillis() - DAY,
-        timeEnd: Long = System.currentTimeMillis()
-    ) {
-        map.clear()
-
-        val data = getPoints(timeBegin, timeEnd)
-        data.forEach {
-            if (it.latitude != null && it.longitude != null) {
-                val latLng = LatLng(it.latitude, it.longitude)
-                map.addMarker(
-                    MarkerOptions().position(latLng)
-                        .title("marker")
-                        .snippet(getTitle(it))
-                )
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_LEVEL))
-            }
+    override fun onStart() {
+        super.onStart()
+        controller.pointsLiveData.observe(this) {
+            showData(it)
         }
     }
 
-    private fun getPoints(
-        timeBegin: Long,
-        timeEnd: Long
-    ): List<PhoneMetrics> {
-        return if(childToken != null) {
-            controller.getData(childToken!!, timeBegin, timeEnd)
-        } else {
-            listOf()
+    private fun getTitle(phoneMetrics: PhoneMetrics): String {
+        return "latitude = ${phoneMetrics.latitude}\n" +
+                "longitude = ${phoneMetrics.longitude}\n" +
+                "cell id = ${phoneMetrics.cellId}\n" +
+                "lac = ${phoneMetrics.lac}\n" +
+                "rsrp = ${phoneMetrics.rsrp}\n" +
+                "rsrq = ${phoneMetrics.rsrq}\n" +
+                "sinr = ${phoneMetrics.sinr}"
+    }
+
+    private fun showData(
+        data: List<PhoneMetrics>,
+    ) {
+        map.clear()
+
+        var latLng = LatLng(0.0, 0.0)
+        data.forEach {
+            if (it.latitude != null && it.longitude != null) {
+                latLng = LatLng(it.latitude, it.longitude)
+                map.addMarker(
+                    MarkerOptions().position(latLng)
+                        .title(it.date.toString())
+                        .snippet(getTitle(it))
+                )
+            }
+        }
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_LEVEL))
+    }
+
+    private fun requestPoints(
+        timeBegin: Date = Date(System.currentTimeMillis() - DAY),
+        timeEnd: Date = Date(System.currentTimeMillis())
+    ) {
+        if(childToken != null) {
+            controller.getData(childToken!!, timeBegin, timeEnd, this::noSuchToken)
         }
     }
 
@@ -106,20 +112,30 @@ class MapsFragment : Fragment() {
         builder.create().show()
     }
 
+    private fun noSuchToken() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.wrong_token_title))
+            .setPositiveButton("Ок") { dialog, _ ->
+                dialog.cancel()
+                replaceFragment(MainParentFragment())
+            }
+        builder.create().show()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.map_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.day -> showData()
-            R.id.week -> showData(
-                System.currentTimeMillis() - DAY * 7,
-                System.currentTimeMillis()
+            R.id.day -> requestPoints()
+            R.id.week -> requestPoints(
+                Date(System.currentTimeMillis() - DAY * 7),
+                Date(System.currentTimeMillis())
             )
-            R.id.month -> showData(
-                System.currentTimeMillis() - DAY * 30,
-                System.currentTimeMillis()
+            R.id.month -> requestPoints(
+                Date(System.currentTimeMillis() - DAY * 30),
+                Date(System.currentTimeMillis())
             )
         }
         return true

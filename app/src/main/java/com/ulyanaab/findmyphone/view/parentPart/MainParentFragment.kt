@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import com.ulyanaab.findmyphone.R
 import com.ulyanaab.findmyphone.utilities.replaceFragment
+import com.ulyanaab.findmyphone.utilities.showToast
 
 
 class MainParentFragment : Fragment() {
@@ -32,6 +33,8 @@ class MainParentFragment : Fragment() {
                 val text = findViewById<EditText>(R.id.id_edit_text).text.toString()
                 if(text != "") {
                     replaceFragment(MapsFragment.newInstance(text))
+                } else {
+                    showToast("Вы не ввели токен")
                 }
             }
         }

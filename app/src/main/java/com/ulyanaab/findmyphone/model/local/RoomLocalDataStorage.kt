@@ -34,7 +34,7 @@ class RoomLocalDataStorage : LocalDataStorage {
     }
 
     override fun getAll(): List<PhoneMetrics> = runBlocking {
-        return@runBlocking async { dao.getAll() }.await()
+        return@runBlocking dao.getAll()
     }
 
     override fun deleteAll() {

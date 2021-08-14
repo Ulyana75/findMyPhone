@@ -3,9 +3,11 @@ package com.ulyanaab.findmyphone.model.local.room
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.TypeConverters
 import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 
 @Dao
+@TypeConverters(DateConverter::class)
 interface MetricsDao {
 
     @Insert

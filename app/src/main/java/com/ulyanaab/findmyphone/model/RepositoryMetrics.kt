@@ -2,6 +2,7 @@ package com.ulyanaab.findmyphone.model
 
 import com.ulyanaab.findmyphone.model.objects.MetricsList
 import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
+import java.util.*
 
 interface RepositoryMetrics {
 
@@ -11,6 +12,6 @@ interface RepositoryMetrics {
 
     fun getAll(token: String): MetricsList
 
-    fun getByTime(token: String, timeBegin: Long, timeEnd: Long): MetricsList
+    fun getByTime(token: String, timeBegin: String, timeEnd: String): MetricsList
 
 }

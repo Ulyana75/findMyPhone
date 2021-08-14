@@ -9,7 +9,8 @@ import com.ulyanaab.findmyphone.model.remote.RetrofitRemoteDataStorage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.Exception
+import kotlinx.coroutines.runBlocking
+import java.util.*
 
 class RepositoryMetricsImpl : RepositoryMetrics {
 
@@ -28,16 +29,16 @@ class RepositoryMetricsImpl : RepositoryMetrics {
         }
     }
 
-    override fun getLast(token: String): PhoneMetrics {
-        return remoteDataStorage.getLast(token)
+    override fun getLast(token: String): PhoneMetrics = runBlocking {
+        return@runBlocking remoteDataStorage.getLast(token)
     }
 
-    override fun getAll(token: String): MetricsList {
-        return remoteDataStorage.getAll(token)
+    override fun getAll(token: String): MetricsList = runBlocking  {
+        return@runBlocking remoteDataStorage.getAll(token)
     }
 
-    override fun getByTime(token: String, timeBegin: Long, timeEnd: Long): MetricsList {
-        return remoteDataStorage.getByTime(token, timeBegin, timeEnd)
+    override fun getByTime(token: String, timeBegin: String, timeEnd: String): MetricsList = runBlocking  {
+        return@runBlocking remoteDataStorage.getByTime(token, timeBegin, timeEnd)
     }
 
     private fun sendToLocalStorage(data: List<PhoneMetrics>, callback: () -> Unit) {
