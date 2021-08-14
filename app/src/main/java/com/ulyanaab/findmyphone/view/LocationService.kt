@@ -20,14 +20,12 @@ import android.telephony.gsm.GsmCellLocation
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
 import com.ulyanaab.findmyphone.R
-import com.ulyanaab.findmyphone.model.PhoneMetrics
-import com.ulyanaab.findmyphone.model.Repository
-import com.ulyanaab.findmyphone.model.RepositoryImpl
+import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
+import com.ulyanaab.findmyphone.model.RepositoryMetrics
+import com.ulyanaab.findmyphone.model.RepositoryMetricsImpl
+import com.ulyanaab.findmyphone.utilities.token
 import com.ulyanaab.findmyphone.utilities.userId
-import java.util.concurrent.Executor
-import java.util.function.Consumer
 
 @SuppressLint("MissingPermission")
 class LocationService : Service() {
@@ -43,7 +41,7 @@ class LocationService : Service() {
 
     private val buffer = mutableListOf<PhoneMetrics>()
 
-    private val repository: Repository = RepositoryImpl()
+    private val repository: RepositoryMetrics = RepositoryMetricsImpl()
 
     private val handler = Handler(Looper.getMainLooper())
 
@@ -120,17 +118,12 @@ class LocationService : Service() {
 
         val res = PhoneMetrics(
             cellId = location?.cid,
-            deviceId = Settings.Secure.getString(
-                applicationContext.contentResolver,
-                Settings.Secure.ANDROID_ID
-            ),
             latitude = locationListener.getCurrentLocation()?.latitude,
             longitude = locationListener.getCurrentLocation()?.longitude,
             lac = location?.lac,
             rsrp = rsrp,
             rsrq = rsrq,
             sinr = sinr,
-            userId = userId
         )
         Log.d("LOL", res.toString())
         return res

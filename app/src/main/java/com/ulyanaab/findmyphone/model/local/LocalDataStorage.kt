@@ -1,6 +1,6 @@
 package com.ulyanaab.findmyphone.model.local
 
-import com.ulyanaab.findmyphone.model.PhoneMetrics
+import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 
 interface LocalDataStorage {
 

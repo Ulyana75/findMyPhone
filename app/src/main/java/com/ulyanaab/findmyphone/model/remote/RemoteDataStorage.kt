@@ -1,9 +1,12 @@
 package com.ulyanaab.findmyphone.model.remote
 
-import com.ulyanaab.findmyphone.model.PhoneMetrics
+import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
+import com.ulyanaab.findmyphone.model.objects.UserModel
 
 interface RemoteDataStorage {
 
-    fun sendData(data: List<PhoneMetrics>, callback: () -> Unit)
+    fun sendMetrics(data: List<PhoneMetrics>, callback: () -> Unit)
+
+    fun sendUser(user: UserModel, callback: () -> Unit)
 
 }

@@ -2,11 +2,12 @@ package com.ulyanaab.findmyphone.model
 
 import com.ulyanaab.findmyphone.model.local.LocalDataStorage
 import com.ulyanaab.findmyphone.model.local.RoomLocalDataStorage
+import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 import com.ulyanaab.findmyphone.model.remote.RemoteDataStorage
 import com.ulyanaab.findmyphone.model.remote.RetrofitRemoteDataStorage
 import java.lang.Exception
 
-class RepositoryImpl : Repository {
+class RepositoryMetricsImpl : RepositoryMetrics {
 
     private val localDataStorage: LocalDataStorage = RoomLocalDataStorage()
     private val remoteDataStorage: RemoteDataStorage = RetrofitRemoteDataStorage()
@@ -24,6 +25,6 @@ class RepositoryImpl : Repository {
     }
 
     private fun sendToRemoteStorage(data: List<PhoneMetrics>, callback: () -> Unit) {
-        remoteDataStorage.sendData(data, callback)
+        remoteDataStorage.sendMetrics(data, callback)
     }
 }

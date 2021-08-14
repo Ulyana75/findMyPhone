@@ -2,9 +2,8 @@ package com.ulyanaab.findmyphone.model.local
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import com.ulyanaab.findmyphone.App
-import com.ulyanaab.findmyphone.model.PhoneMetrics
+import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

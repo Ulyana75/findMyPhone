@@ -1,17 +1,20 @@
 package com.ulyanaab.findmyphone.view
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
+import android.telephony.TelephonyManager
+import android.telephony.gsm.GsmCellLocation
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.ulyanaab.findmyphone.App
 import com.ulyanaab.findmyphone.R
+import com.ulyanaab.findmyphone.model.RepositoryMetrics
+import com.ulyanaab.findmyphone.model.RepositoryMetricsImpl
+import com.ulyanaab.findmyphone.model.RepositoryUser
+import com.ulyanaab.findmyphone.model.RepositoryUserImpl
 import com.ulyanaab.findmyphone.utilities.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,17 +28,6 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         requestLocationPermissions()
-        initUserId()
-    }
-
-    private fun initUserId() {
-        val sPref = getSharedPreferences(NAME_USER_PREFERENCE, MODE_PRIVATE)
-        var uid = sPref.getString(USER_ID_KEY, "null")
-        if(uid == "null") {
-            uid = UUID.randomUUID().toString()
-            sPref.edit().putString(USER_ID_KEY, uid).apply()
-        }
-        userId = uid!!
     }
 
     private fun requestLocationPermissions() {

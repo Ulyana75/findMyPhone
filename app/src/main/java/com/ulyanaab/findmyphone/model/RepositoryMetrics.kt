@@ -1,6 +1,8 @@
 package com.ulyanaab.findmyphone.model
 
-interface Repository {
+import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
+
+interface RepositoryMetrics {
 
     fun sendData(data: List<PhoneMetrics>, callback: () -> Unit)
 

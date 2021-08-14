@@ -3,7 +3,7 @@ package com.ulyanaab.findmyphone.model.local.room
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.ulyanaab.findmyphone.model.PhoneMetrics
+import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 
 @Dao
 interface MetricsDao {

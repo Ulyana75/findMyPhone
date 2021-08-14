@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.ulyanaab.findmyphone.model.PhoneMetrics
+import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 import com.ulyanaab.findmyphone.utilities.DATABASE_NAME
 
 @Database(entities = [PhoneMetrics::class], version = 1)
