@@ -42,7 +42,7 @@ class InitUserFragment : Fragment() {
     }
 
     private fun initUser() {
-        if(userController.isInited()) {
+        if (userController.isInited()) {
             replaceFragment(MainFragment())
         } else {
             userController.sendUser(

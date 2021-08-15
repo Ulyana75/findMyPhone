@@ -2,7 +2,6 @@ package com.ulyanaab.findmyphone.model
 
 import com.ulyanaab.findmyphone.model.objects.MetricsList
 import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
-import java.util.*
 
 interface RepositoryMetrics {
 

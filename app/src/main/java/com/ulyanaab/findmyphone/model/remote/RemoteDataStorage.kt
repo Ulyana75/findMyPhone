@@ -3,7 +3,6 @@ package com.ulyanaab.findmyphone.model.remote
 import com.ulyanaab.findmyphone.model.objects.MetricsList
 import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 import com.ulyanaab.findmyphone.model.objects.UserModel
-import java.util.*
 
 interface RemoteDataStorage {
 

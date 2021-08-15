@@ -31,7 +31,7 @@ class MainParentFragment : Fragment() {
         with(requireView()) {
             findViewById<Button>(R.id.button_open_map).setOnClickListener {
                 val text = findViewById<EditText>(R.id.id_edit_text).text.toString()
-                if(text != "") {
+                if (text != "") {
                     replaceFragment(MapsFragment.newInstance(text))
                 } else {
                     showToast("Вы не ввели токен")

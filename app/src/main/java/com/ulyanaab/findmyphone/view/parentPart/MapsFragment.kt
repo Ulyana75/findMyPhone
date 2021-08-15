@@ -17,6 +17,7 @@ import com.ulyanaab.findmyphone.R
 import com.ulyanaab.findmyphone.controllers.MapController
 import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 import com.ulyanaab.findmyphone.utilities.KEY_TO_SEND_TOKEN
+import com.ulyanaab.findmyphone.utilities.dateFormat
 import com.ulyanaab.findmyphone.utilities.replaceFragment
 import java.util.*
 
@@ -85,7 +86,7 @@ class MapsFragment : Fragment() {
                 latLng = LatLng(it.latitude, it.longitude)
                 map.addMarker(
                     MarkerOptions().position(latLng)
-                        .title(it.date.toString())
+                        .title(dateFormat.parse(it.date)!!.toString())
                         .snippet(getTitle(it))
                 )
             }
@@ -97,7 +98,7 @@ class MapsFragment : Fragment() {
         timeBegin: Date = Date(System.currentTimeMillis() - DAY),
         timeEnd: Date = Date(System.currentTimeMillis())
     ) {
-        if(childToken != null) {
+        if (childToken != null) {
             controller.getData(childToken!!, timeBegin, timeEnd, this::noSuchToken)
         }
     }
@@ -127,7 +128,7 @@ class MapsFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.day -> requestPoints()
             R.id.week -> requestPoints(
                 Date(System.currentTimeMillis() - DAY * 7),

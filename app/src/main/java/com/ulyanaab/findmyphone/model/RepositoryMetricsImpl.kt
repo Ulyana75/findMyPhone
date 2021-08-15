@@ -21,11 +21,13 @@ class RepositoryMetricsImpl : RepositoryMetrics {
     override fun sendData(data: List<PhoneMetrics>, callback: () -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             sendToRemoteStorage(localDataStorage.getAll() + data,
-                onSuccess = callback,
+                onSuccess = {
+                    callback()
+                    localDataStorage.deleteAll()
+                },
                 onFailure = {
                     sendToLocalStorage(data, callback)
                 })
-            localDataStorage.deleteAll()
         }
     }
 
@@ -33,13 +35,14 @@ class RepositoryMetricsImpl : RepositoryMetrics {
         return@runBlocking remoteDataStorage.getLast(token)
     }
 
-    override fun getAll(token: String): MetricsList = runBlocking  {
+    override fun getAll(token: String): MetricsList = runBlocking {
         return@runBlocking remoteDataStorage.getAll(token)
     }
 
-    override fun getByTime(token: String, timeBegin: String, timeEnd: String): MetricsList = runBlocking  {
-        return@runBlocking remoteDataStorage.getByTime(token, timeBegin, timeEnd)
-    }
+    override fun getByTime(token: String, timeBegin: String, timeEnd: String): MetricsList =
+        runBlocking {
+            return@runBlocking remoteDataStorage.getByTime(token, timeBegin, timeEnd)
+        }
 
     private fun sendToLocalStorage(data: List<PhoneMetrics>, callback: () -> Unit) {
         localDataStorage.sendData(data, callback)

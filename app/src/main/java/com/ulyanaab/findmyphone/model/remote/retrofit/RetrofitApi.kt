@@ -3,9 +3,7 @@ package com.ulyanaab.findmyphone.model.remote.retrofit
 import com.ulyanaab.findmyphone.model.objects.MetricsList
 import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 import com.ulyanaab.findmyphone.model.objects.UserResponse
-import retrofit2.Call
 import retrofit2.http.*
-import java.util.*
 
 interface RetrofitApi {
 

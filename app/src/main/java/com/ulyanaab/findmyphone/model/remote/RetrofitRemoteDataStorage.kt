@@ -4,7 +4,6 @@ import com.ulyanaab.findmyphone.App
 import com.ulyanaab.findmyphone.model.objects.MetricsList
 import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 import com.ulyanaab.findmyphone.model.objects.UserModel
-import com.ulyanaab.findmyphone.model.objects.UserResponse
 import com.ulyanaab.findmyphone.utilities.token
 import kotlinx.coroutines.*
 import java.util.*
@@ -13,7 +12,11 @@ class RetrofitRemoteDataStorage : RemoteDataStorage {
 
     private val retrofitApi = App.retrofitApi
 
-    override fun sendMetrics(data: List<PhoneMetrics>, onSuccess: () -> Unit, onFailure: () -> Unit) {
+    override fun sendMetrics(
+        data: List<PhoneMetrics>,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
+    ) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 retrofitApi.pushMetrics(
@@ -21,13 +24,9 @@ class RetrofitRemoteDataStorage : RemoteDataStorage {
                         data = data
                     )
                 )
-                withContext(Dispatchers.Main) {
-                    onSuccess()
-                }
+                onSuccess()
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    onFailure()
-                }
+                onFailure()
             }
         }
     }
@@ -42,7 +41,7 @@ class RetrofitRemoteDataStorage : RemoteDataStorage {
                 withContext(Dispatchers.Main) {
                     onSuccess()
                 }
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     onFailure()
                 }
@@ -58,8 +57,9 @@ class RetrofitRemoteDataStorage : RemoteDataStorage {
         return@runBlocking retrofitApi.getAllRecords(token)
     }
 
-    override fun getByTime(token: String, timeBegin: String, timeEnd: String): MetricsList = runBlocking {
-        return@runBlocking retrofitApi.getRecordsByTime(token, timeBegin, timeEnd)
-    }
+    override fun getByTime(token: String, timeBegin: String, timeEnd: String): MetricsList =
+        runBlocking {
+            return@runBlocking retrofitApi.getRecordsByTime(token, timeBegin, timeEnd)
+        }
 
 }

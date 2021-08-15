@@ -45,7 +45,8 @@ class ChooseAccountFragment : Fragment() {
     }
 
     private fun addParentToken() {
-        val sPref = requireContext().getSharedPreferences(TOKEN_PREFERENCE, AppCompatActivity.MODE_PRIVATE)
+        val sPref =
+            requireContext().getSharedPreferences(TOKEN_PREFERENCE, AppCompatActivity.MODE_PRIVATE)
         sPref.edit().putString(TOKEN_KEY, PARENT_TOKEN).apply()
     }
 

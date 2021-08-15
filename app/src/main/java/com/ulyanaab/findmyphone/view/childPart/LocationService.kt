@@ -90,7 +90,7 @@ class LocationService : Service() {
         )
 
         liveDataNeedToStop.observe(APP_ACTIVITY) {
-            if(it) {
+            if (it) {
                 stopForeground(true)
                 stopSelf()
             }

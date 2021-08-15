@@ -2,8 +2,6 @@ package com.ulyanaab.findmyphone.model.objects
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import java.util.*
 
 @Entity(tableName = "PhoneMetrics")
 data class PhoneMetrics(

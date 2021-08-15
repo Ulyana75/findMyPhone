@@ -62,7 +62,8 @@ class MainFragment : Fragment() {
 
     private fun serviceStopped() {
         with(requireView()) {
-            findViewById<TextView>(R.id.text_label).text = getString(R.string.main_fragment_text_stop)
+            findViewById<TextView>(R.id.text_label).text =
+                getString(R.string.main_fragment_text_stop)
             findViewById<Button>(R.id.button_stop).visibility = View.GONE
             findViewById<Button>(R.id.button_continue).visibility = View.VISIBLE
         }

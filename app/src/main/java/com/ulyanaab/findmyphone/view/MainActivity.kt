@@ -2,7 +2,6 @@ package com.ulyanaab.findmyphone.view
 
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.ulyanaab.findmyphone.R
 import com.ulyanaab.findmyphone.utilities.*
@@ -10,7 +9,6 @@ import com.ulyanaab.findmyphone.view.childPart.GetPermissionsFragment
 import com.ulyanaab.findmyphone.view.childPart.InitUserFragment
 import com.ulyanaab.findmyphone.view.childPart.StartChildFragment
 import com.ulyanaab.findmyphone.view.parentPart.MainParentFragment
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
