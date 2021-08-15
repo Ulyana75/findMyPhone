@@ -1,7 +1,7 @@
 package com.ulyanaab.findmyphone.model.remote
 
+import android.util.Log
 import com.ulyanaab.findmyphone.App
-import com.ulyanaab.findmyphone.model.objects.MetricsList
 import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 import com.ulyanaab.findmyphone.model.objects.UserModel
 import com.ulyanaab.findmyphone.utilities.token
@@ -20,12 +20,11 @@ class RetrofitRemoteDataStorage : RemoteDataStorage {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 retrofitApi.pushMetrics(
-                    MetricsList(
-                        data = data
-                    )
+                    data
                 )
                 onSuccess()
             } catch (e: Exception) {
+                e.printStackTrace()
                 onFailure()
             }
         }
@@ -37,11 +36,13 @@ class RetrofitRemoteDataStorage : RemoteDataStorage {
                 val response = retrofitApi.pushNewUser(
                     user.deviceId
                 )
-                token = response.token
+                token = response
+                Log.d("OkHttp", "token $token")
                 withContext(Dispatchers.Main) {
                     onSuccess()
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 withContext(Dispatchers.Main) {
                     onFailure()
                 }
@@ -53,11 +54,11 @@ class RetrofitRemoteDataStorage : RemoteDataStorage {
         return@runBlocking retrofitApi.getLastRecord(token)
     }
 
-    override fun getAll(token: String): MetricsList = runBlocking {
+    override fun getAll(token: String): List<PhoneMetrics> = runBlocking {
         return@runBlocking retrofitApi.getAllRecords(token)
     }
 
-    override fun getByTime(token: String, timeBegin: String, timeEnd: String): MetricsList =
+    override fun getByTime(token: String, timeBegin: String, timeEnd: String): List<PhoneMetrics> =
         runBlocking {
             return@runBlocking retrofitApi.getRecordsByTime(token, timeBegin, timeEnd)
         }

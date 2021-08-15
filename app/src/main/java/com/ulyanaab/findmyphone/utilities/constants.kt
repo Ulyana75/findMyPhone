@@ -17,7 +17,7 @@ const val TOKEN_PREFERENCE = "TokenSPref"
 
 const val TOKEN_KEY = "token"
 
-const val BASE_URL = "https://www.chess.com"
+const val BASE_URL = "https://hackaton-mts-teta.herokuapp.com/"
 
 val liveDataNeedToStop = MutableLiveData<Boolean>()
 

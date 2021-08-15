@@ -25,7 +25,7 @@ class MapController {
                         token,
                         dateFormat.format(timeBegin),
                         dateFormat.format(timeEnd)
-                    ).data
+                    )
                 )
             } catch (_: Exception) {
                 withContext(Dispatchers.Main) {

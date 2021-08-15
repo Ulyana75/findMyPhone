@@ -1,6 +1,5 @@
 package com.ulyanaab.findmyphone.model
 
-import com.ulyanaab.findmyphone.model.objects.MetricsList
 import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
 
 interface RepositoryMetrics {
@@ -9,8 +8,8 @@ interface RepositoryMetrics {
 
     fun getLast(token: String): PhoneMetrics
 
-    fun getAll(token: String): MetricsList
+    fun getAll(token: String): List<PhoneMetrics>
 
-    fun getByTime(token: String, timeBegin: String, timeEnd: String): MetricsList
+    fun getByTime(token: String, timeBegin: String, timeEnd: String): List<PhoneMetrics>
 
 }

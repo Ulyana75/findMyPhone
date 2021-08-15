@@ -6,15 +6,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.childPart.MainFragment">
 
-    <TextView
-        android:id="@+id/token_text"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/copy_image"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_copy"
+        android:layout_margin="@dimen/margin_normal"
+        android:padding="@dimen/normal_padding"/>
+
+    <TextView
+        android:id="@+id/token_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/copy_image"
+        app:layout_constraintTop_toTopOf="@id/copy_image"
+        app:layout_constraintBottom_toBottomOf="@id/copy_image"
         android:gravity="center"
-        tools:text="token: 123123123"
-        android:layout_marginTop="@dimen/margin_normal"
-        android:textSize="20sp"/>
+        tools:text="123123123"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/text_label"

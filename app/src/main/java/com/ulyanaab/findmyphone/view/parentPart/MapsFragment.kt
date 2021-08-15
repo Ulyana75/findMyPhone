@@ -60,6 +60,7 @@ class MapsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        setHasOptionsMenu(true)
         controller.pointsLiveData.observe(this) {
             showData(it)
         }
