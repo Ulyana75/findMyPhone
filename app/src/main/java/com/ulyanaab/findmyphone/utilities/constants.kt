@@ -21,6 +21,12 @@ const val BASE_URL = "https://www.chess.com"
 
 val liveDataNeedToStop = MutableLiveData<Boolean>()
 
+val liveDataTimeDelay = MutableLiveData<Long>()
+
+const val LOW_BATTERY_TIME_DELAY = 10000L
+
+const val OKAY_BATTERY_TIME_DELAY = 3000L
+
 const val KEY_TO_SEND_TOKEN = "token"
 
 const val PARENT_TOKEN = "parent"

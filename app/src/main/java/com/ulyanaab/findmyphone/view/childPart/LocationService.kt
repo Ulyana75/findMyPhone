@@ -22,10 +22,7 @@ import androidx.core.app.NotificationCompat
 import com.ulyanaab.findmyphone.R
 import com.ulyanaab.findmyphone.controllers.ServiceController
 import com.ulyanaab.findmyphone.model.objects.PhoneMetrics
-import com.ulyanaab.findmyphone.utilities.APP_ACTIVITY
-import com.ulyanaab.findmyphone.utilities.dateFormat
-import com.ulyanaab.findmyphone.utilities.liveDataNeedToStop
-import com.ulyanaab.findmyphone.utilities.token
+import com.ulyanaab.findmyphone.utilities.*
 import java.util.*
 
 @SuppressLint("MissingPermission")
@@ -34,7 +31,7 @@ class LocationService : Service() {
     private val serviceController = ServiceController()
 
     private val NOTIFICATION_CHANNEL_ID = "notification_channel"
-    private val TIME_DELAY_SAVE_METRICS: Long = 3000
+    private var TIME_DELAY_SAVE_METRICS: Long = OKAY_BATTERY_TIME_DELAY
     private val MAX_BUFFER_SIZE = 10
     private val MIN_DIST = 3f
 
@@ -95,6 +92,10 @@ class LocationService : Service() {
                 stopSelf()
             }
         }
+
+        liveDataTimeDelay.observe(APP_ACTIVITY) {
+            TIME_DELAY_SAVE_METRICS = it
+        }
     }
 
     private fun saveMetricsToBuffer() {
@@ -114,12 +115,14 @@ class LocationService : Service() {
         var rsrq: Int? = null
         var sinr: Int? = null
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            cellInfo.forEach {
-                if (it is CellInfoLte) {
+        cellInfo.forEach {
+            if (it is CellInfoLte) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     rsrp = it.cellSignalStrength.rsrp
                     rsrq = it.cellSignalStrength.rsrq
                     sinr = it.cellSignalStrength.rssnr
+                } else {
+                    rsrp = it.cellSignalStrength.dbm
                 }
             }
         }
