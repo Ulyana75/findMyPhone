@@ -61,8 +61,16 @@ class LocationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        initManagers()
-        handler.post(runnable)
+        when(intent.action) {
+            ACTION_STOP_SERVICE -> {
+                stopForeground(true)
+                stopSelfResult(startId)
+            }
+            ACTION_START_SERVICE -> {
+                initManagers()
+                handler.post(runnable)
+            }
+        }
         return START_STICKY
     }
 
@@ -85,13 +93,6 @@ class LocationService : Service() {
             MIN_DIST,
             locationListener
         )
-
-        liveDataNeedToStop.observe(APP_ACTIVITY) {
-            if (it) {
-                stopForeground(true)
-                stopSelf()
-            }
-        }
 
         liveDataTimeDelay.observe(APP_ACTIVITY) {
             TIME_DELAY_SAVE_METRICS = it

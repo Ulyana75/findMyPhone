@@ -19,8 +19,6 @@ const val TOKEN_KEY = "token"
 
 const val BASE_URL = "https://hackaton-mts-teta.herokuapp.com/"
 
-val liveDataNeedToStop = MutableLiveData<Boolean>()
-
 val liveDataTimeDelay = MutableLiveData<Long>()
 
 const val LOW_BATTERY_TIME_DELAY = 10000L
@@ -33,3 +31,6 @@ const val PARENT_TOKEN = "parent"
 
 @SuppressLint("SimpleDateFormat")
 val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+
+const val ACTION_START_SERVICE = "start"
+const val ACTION_STOP_SERVICE = "stop"

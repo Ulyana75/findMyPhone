@@ -16,9 +16,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ulyanaab.findmyphone.R
-import com.ulyanaab.findmyphone.utilities.liveDataNeedToStop
-import com.ulyanaab.findmyphone.utilities.showToast
-import com.ulyanaab.findmyphone.utilities.token
+import com.ulyanaab.findmyphone.utilities.*
 
 
 class MainFragment : Fragment() {
@@ -33,7 +31,6 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("LOL", "start service")
         startService()
     }
 
@@ -86,17 +83,24 @@ class MainFragment : Fragment() {
 
     private fun startService() {
         if (!LocationService.isServiceStarted) {
-            liveDataNeedToStop.value = false
+            Log.d("LOL", "start service")
+            val intent = Intent(requireContext(), LocationService::class.java)
+            intent.action = ACTION_START_SERVICE
             ContextCompat.startForegroundService(
                 requireContext(),
-                Intent(requireContext(), LocationService::class.java)
+                intent
             )
         }
         serviceWorking()
     }
 
     private fun stopService() {
-        liveDataNeedToStop.value = true
+        val intent = Intent(requireContext(), LocationService::class.java)
+        intent.action = ACTION_STOP_SERVICE
+        ContextCompat.startForegroundService(
+            requireContext(),
+            intent
+        )
         serviceStopped()
     }
 

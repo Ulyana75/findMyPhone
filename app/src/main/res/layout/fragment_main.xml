@@ -14,7 +14,8 @@
         app:layout_constraintStart_toStartOf="parent"
         android:src="@drawable/ic_copy"
         android:layout_margin="@dimen/margin_normal"
-        android:padding="@dimen/normal_padding"/>
+        android:padding="@dimen/normal_padding"
+        android:background="@drawable/ripple_effect"/>
 
     <TextView
         android:id="@+id/token_text"
