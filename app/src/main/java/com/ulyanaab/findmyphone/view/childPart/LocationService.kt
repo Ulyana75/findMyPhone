@@ -10,7 +10,9 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.telephony.CellInfoLte
 import android.telephony.TelephonyManager
 import android.telephony.gsm.GsmCellLocation
@@ -30,8 +32,8 @@ class LocationService : Service() {
 
     private val NOTIFICATION_CHANNEL_ID = "notification_channel"
     private var TIME_DELAY_SAVE_METRICS: Long = OKAY_BATTERY_TIME_DELAY
-    private val MAX_BUFFER_SIZE = 2
-    private val MIN_DIST = 1f
+    private val MAX_BUFFER_SIZE = 10
+    private val MIN_DIST = 0f
 
     private lateinit var telephonyManager: TelephonyManager
     private lateinit var locationManager: LocationManager
@@ -39,14 +41,14 @@ class LocationService : Service() {
 
     private val buffer = mutableListOf<PhoneMetrics>()
 
-    //private val handler = Handler(Looper.getMainLooper())
+    private val handler = Handler(Looper.getMainLooper())
 
-//    private val runnable = object : Runnable {
-//        override fun run() {
-//            saveMetricsToBuffer()
-//            handler.postDelayed(this, TIME_DELAY_SAVE_METRICS)
-//        }
-//    }
+    private val runnable = object : Runnable {
+        override fun run() {
+            saveMetricsToBuffer()
+            handler.postDelayed(this, TIME_DELAY_SAVE_METRICS)
+        }
+    }
 
     override fun onBind(intent: Intent): IBinder? {
         return null
@@ -60,14 +62,14 @@ class LocationService : Service() {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         initManagers()
-        //handler.post(runnable)
+        handler.post(runnable)
         return START_STICKY
     }
 
     override fun onDestroy() {
         super.onDestroy()
         isServiceStarted = false
-        //handler.removeCallbacks(runnable)
+        handler.removeCallbacks(runnable)
         locationManager.removeUpdates(locationListener)
         Log.d("LOL", "onDestroy")
     }
@@ -100,7 +102,6 @@ class LocationService : Service() {
         val metrics = getMetrics()
         if(metrics.latitude != null && metrics.longitude != null) {
             buffer.add(metrics)
-            Log.d("LOL", "${metrics.latitude}, ${metrics.longitude}")
         }
         if (buffer.size >= MAX_BUFFER_SIZE) {
             serviceController.sendData(buffer) {
@@ -174,7 +175,6 @@ class LocationService : Service() {
 
         override fun onLocationChanged(location: Location) {
             curLocation = location
-            saveMetricsToBuffer()
         }
 
         override fun onProviderDisabled(provider: String) {
